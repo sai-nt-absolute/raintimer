@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Office Focus Dashboard</title>
+    <!-- Link to your external stylesheet here or wait for Part 2 -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<!-- The rain engine targets classes directly on the body -->
+<body class="back-row-toggle splat-toggle">
+
+    <!-- Your Custom CSS Rain Containers -->
+    <div class="rain front-row"></div>
+    <div class="rain back-row"></div>
+
+    <!-- Live System Clock Overlays -->
+    <div class="top-bar">
+        <div class="live-clock glass">Time Now: <span id="currentClock">00:00:00 AM</span></div>
+        <div class="leave-clock glass">Freedom Target: <span id="leaveClock">--:--:--</span></div>
+    </div>
+
+    <!-- Main Workspace Frame -->
+    <div class="workspace">
+        
+        <!-- Timeline Shift Event History Logs -->
+        <div class="sidebar glass">
+            <h2>Shift Timeline</h2>
+            <ul class="log-list" id="logList">
+                <li class="log-item">System ready. Hit Start to clock in.</li>
+            </ul>
+        </div>
+
+        <!-- Perfectly Centered Timer Cluster Core -->
+        <div class="main-cluster">
+            <div class="timer-card glass">
+                <div class="metrics-grid">
+                    <div class="metric-box">
+                        <div class="metric-label">Time Done</div>
+                        <div class="metric-value" id="timeDoneDisplay">00:00:00</div>
+                    </div>
+                    <div class="metric-box">
+                        <div class="metric-label">Time Left</div>
+                        <div class="metric-value" id="timeLeftDisplay">08:00:00</div>
+                    </div>
+                </div>
+                
+                <div class="controls">
+                    <button class="btn btn-main" id="mainBtn">Start Work</button>
+                    <button class="btn btn-reset" id="resetBtn">Reset</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Integrated Hidden Configurations Settings Tray -->
+    <button class="settings-toggle" id="gearBtn">⚙️</button>
+    <div class="settings-panel glass" id="settingsPanel">
+        <h3>Dashboard Configs</h3>
+        <div class="setting-row">
+            <label>Shift Target (Hours)</label>
+            <input type="number" id="shiftInput" value="8" min="1" max="24">
+        </div>
+        <div class="setting-row">
+            <label>Enable Rain</label>
+            <input type="checkbox" id="rainToggle" checked>
+        </div>
+        <div class="setting-row">
+            <label>Enable Splat Drops</label>
+            <input type="checkbox" id="splatToggleInput" checked>
+        </div>
+        <div class="setting-row">
+            <label>Enable Deep Back Row</label>
+            <input type="checkbox" id="backRowToggleInput" checked>
+        </div>
+    </div>
+
+    <!-- Standard Library Dependency for your Rain Code Generator Engine -->
+    <script src="https://jquery.com"></script>
+    <!-- Link to your external JS logic file here or wait for Part 3 -->
+    <script src="script.js"></script>
+</body>
+</html>

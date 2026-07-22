@@ -1,0 +1,365 @@
+:root {
+  --bg-dark: #0f111a;
+  --glass-bg: rgba(15, 23, 42, 0.4);
+  --glass-border: rgba(255, 255, 255, 0.08);
+  --text-main: #f8fafc;
+  --text-muted: #94a3b8;
+  --accent-work: #38bdf8;
+  --accent-break: #fb7185;
+  --accent-success: #34d399;
+}
+
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: system-ui, -apple-system, sans-serif;
+  background: linear-gradient(to bottom, #161925, #0b0c16);
+  color: var(--text-main);
+  position: relative;
+}
+
+/* ==========================================================================
+   CSS Rain Engine Configuration (Your Custom Base Animations Modified)
+   ========================================================================== */
+.rain {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 2;
+  transition: opacity 0.5s ease;
+}
+
+.rain.back-row {
+  display: none;
+  z-index: 1;
+  bottom: 60px;
+  opacity: 0.5;
+}
+
+body.back-row-toggle .rain.back-row {
+  display: block;
+}
+
+.drop {
+  position: absolute;
+  bottom: 100%;
+  width: 15px;
+  height: 120px;
+  pointer-events: none;
+  animation: drop 0.5s linear infinite;
+}
+
+.stem {
+  width: 1px;
+  height: 60%;
+  margin-left: 7px;
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.25));
+  animation: stem 0.5s linear infinite;
+}
+
+.splat {
+  width: 15px;
+  height: 10px;
+  border-top: 2px dotted rgba(255, 255, 255, 0.5);
+  border-radius: 50%;
+  opacity: 1;
+  transform: scale(0);
+  animation: splat 0.5s linear infinite;
+  display: none;
+}
+
+body.splat-toggle .splat {
+  display: block;
+}
+
+/* Standard Downward Animations */
+@keyframes drop {
+  0% { transform: translateY(0vh); }
+  75% { transform: translateY(90vh); }
+  100% { transform: translateY(90vh); }
+}
+
+@keyframes stem {
+  0% { opacity: 1; }
+  65% { opacity: 1; }
+  75% { opacity: 0; }
+  100% { opacity: 0; }
+}
+
+@keyframes splat {
+  0%, 80% { opacity: 1; transform: scale(0); }
+  90% { opacity: 0.5; transform: scale(1); }
+  100% { opacity: 0; transform: scale(1.5); }
+}
+
+/* ==========================================================================
+   INVERSE MECHANICS (Triggered when user hits break/pause button)
+   ========================================================================== */
+body.rain-reverse .drop {
+  bottom: auto;
+  top: 100%; /* Spawns them at the bottom of the window */
+  animation: dropInverse 0.5s linear infinite;
+}
+
+body.rain-reverse .stem {
+  /* Flip the gradient so it looks like it's pointing skyward */
+  background: linear-gradient(to top, rgba(255, 255, 255, 0), rgba(255, 255, 255, 0.25));
+  animation: stemInverse 0.5s linear infinite;
+}
+
+body.rain-reverse .splat {
+  display: none !important; /* Hide splashes since rain isn't hitting the floor */
+}
+
+@keyframes dropInverse {
+  0% { transform: translateY(0vh); }
+  75% { transform: translateY(-90vh); }
+  100% { transform: translateY(-90vh); }
+}
+
+@keyframes stemInverse {
+  0%, 65% { opacity: 1; }
+  75%, 100% { opacity: 0; }
+}
+
+/* ==========================================================================
+   Dashboard Glassmorphism Interface Styles
+   ========================================================================== */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid var(--glass-border);
+  border-radius: 24px;
+}
+
+.top-bar {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  right: 24px;
+  display: flex;
+  justify-content: space-between;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.live-clock, .leave-clock {
+  padding: 12px 24px;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
+  pointer-events: auto;
+}
+
+.live-clock span, .leave-clock span {
+  font-weight: 700;
+  color: var(--accent-work);
+  font-family: monospace;
+}
+
+.workspace {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: 85px 24px 24px 24px;
+  gap: 24px;
+  position: relative;
+  z-index: 5;
+}
+
+/* Sidebar History Tracking Container */
+.sidebar {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  padding: 24px;
+  height: 100%;
+}
+
+.sidebar h2 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--text-muted);
+}
+
+.log-list {
+  flex-grow: 1;
+  overflow-y: auto;
+  list-style: none;
+  padding-right: 4px;
+}
+
+.log-list::-webkit-scrollbar {
+  width: 4px;
+}
+
+.log-list::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+
+.log-item {
+  font-size: 0.85rem;
+  padding: 10px 12px;
+  border-left: 2px solid var(--glass-border);
+  margin-bottom: 8px;
+  background: rgba(255, 255, 255, 0.02);
+  border-radius: 0 8px 8px 0;
+}
+
+.log-item.work-event { border-left-color: var(--accent-work); }
+.log-item.break-event { border-left-color: var(--accent-break); }
+
+/* Centered Main Layout Control Cluster */
+.main-cluster {
+  flex-grow: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timer-card {
+  width: 420px;
+  padding: 40px;
+  text-align: center;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
+}
+
+.metrics-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.metric-box {
+  background: rgba(255, 255, 255, 0.01);
+  padding: 18px 16px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.02);
+}
+
+.metric-label {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+  letter-spacing: 1px;
+}
+
+.metric-value {
+  font-size: 1.8rem;
+  font-weight: 700;
+  font-family: monospace;
+}
+
+#timeDoneDisplay { color: var(--accent-work); }
+#timeLeftDisplay { color: var(--accent-success); }
+
+/* Control Buttons Setup */
+.controls {
+  display: flex;
+  gap: 12px;
+}
+
+.btn {
+  border: none;
+  padding: 16px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 16px;
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-main {
+  flex-grow: 3;
+  background: var(--accent-work);
+  color: #0b0c16;
+}
+
+.btn-main.working {
+  background: var(--accent-break);
+  color: #ffffff;
+}
+
+.btn-reset {
+  flex-grow: 1;
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--text-main);
+}
+
+.btn-reset:hover {
+  background: rgba(255, 255, 255, 0.14);
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+/* Slidout Settings Drawer Layout */
+.settings-toggle {
+  position: absolute;
+  bottom: 24px;
+  right: 24px;
+  padding: 12px;
+  cursor: pointer;
+  z-index: 10;
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.5rem;
+  transition: transform 0.3s ease;
+}
+
+.settings-toggle:hover {
+  transform: rotate(45deg);
+  color: var(--text-main);
+}
+
+.settings-panel {
+  position: absolute;
+  bottom: 80px;
+  right: 24px;
+  width: 290px;
+  padding: 24px;
+  z-index: 10;
+  display: none;
+  flex-direction: column;
+  gap: 16px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.settings-panel.active {
+  display: flex;
+}
+
+.settings-panel h3 {
+  font-size: 0.95rem;
+  margin-bottom: 4px;
+  color: var(--text-main);
+  border-bottom: 1px solid var(--glass-border);
+  padding-bottom: 8px;
+}
+
+.setting-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.85rem;
+}
+
+.setting-row input[type="number"] {
+  width: 65px;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--glass-border);
+  color: white;
+  padding: 6px;
+  border-radius: 8px;
+  text-align: center;
+  font-family: monospace;
+}
