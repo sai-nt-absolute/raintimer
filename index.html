@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rain.Timer</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="splat-toggle back-row-toggle" data-theme="ambient">
+
+    <!-- Environmental Theme Canvas Infrastructure -->
+    <canvas id="canv"></canvas>
+    <div class="rain front-row"></div>
+    <div class="rain back-row"></div>
+
+    <div class="app-viewport">
+        
+        <!-- 1. Top Centered Console Display -->
+        <header class="top-console authentic-glass">
+            <div class="console-item">Time: <span id="currentClock">00:00:00</span></div>
+            <div class="console-divider"></div>
+            <div class="console-item">Shift End: <span id="leaveClock">--:--:--</span></div>
+        </header>
+
+        <div class="rain-viewing-gap"></div>
+
+        <!-- Centralized Bottom Workspace Cluster Deck -->
+        <footer class="bottom-workspace-deck">
+            
+            <!-- 2. Main Inline Ribbon Controller Bar (With Pop-up Glass Styling Overlay) -->
+            <div class="ribbon-panel authentic-glass popup-glass">
+                <div class="target-input-cluster">
+                    <input type="number" id="hrInput" value="8" min="0" max="24" placeholder="HH">
+                    <span class="lbl-tag">hr</span>
+                    <input type="number" id="minInput" value="0" min="0" max="59" placeholder="MM">
+                    <span class="lbl-tag">min</span>
+                    <button class="control-btn btn-secondary" id="setTargetBtn">Set</button>
+                </div>
+
+                <div class="ribbon-divider"></div>
+
+                <div class="metric-readout">
+                    <div class="metric-label">Elapsed</div>
+                    <div class="metric-value value-work" id="timeDoneDisplay">00:00:00</div>
+                </div>
+
+                <div class="metric-readout">
+                    <div class="metric-label">Remaining</div>
+                    <div class="metric-value value-success" id="timeLeftDisplay">08:00:00</div>
+                </div>
+
+                <div class="ribbon-divider"></div>
+
+                <div class="execution-actions">
+                    <button class="control-btn btn-primary" id="mainBtn">Start Shift</button>
+                    <button class="control-btn btn-neutral" id="resetBtn">Reset</button>
+                </div>
+
+                <button class="gear-trigger-btn" id="gearBtn" title="Engine Settings">⚙️</button>
+            </div>
+
+            <!-- 3. Combined Analytics Ledger Panel -->
+            <div class="ledger-panel authentic-glass">
+                <div class="ledger-header-row">
+                    <h2>Break History Log</h2>
+                    <div class="ledger-header-divider"></div>
+                    <div class="ledger-running-total">Total Break Time: <span id="totalBreakDisplay">00:00:00</span></div>
+                </div>
+                
+                <div class="ledger-scroll-viewport">
+                    <table class="ledger-data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 70px; text-align: center;">Sl. No</th>
+                                <th>Break Start</th>
+                                <th>Break End</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakLogBody">
+                            <tr id="emptyPlaceholder">
+                                <td colspan="4" class="empty-placeholder-text">No workplace break events logged for this focus session.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+        </footer>
+    </div>
+
+    <!-- Redesigned Wide Modern Themes Settings Popup Overlay Modal Box -->
+    <div class="settings-modal-backdrop" id="settingsModal">
+        <div class="modal-box authentic-glass wide-modal">
+            <h3>Theme Selector</h3>
+            
+            <!-- Modern Dynamic Visual Selector Cards Deck Layout -->
+            <div class="theme-cards-deck">
+                <div class="theme-select-card" data-value="ambient">
+                    <div class="card-icon">☔</div>
+                    <div class="card-info">
+                        <h4>Ambient Rain</h4>
+                        <p>Classic fast organic falling drops with rapid particle splats</p>
+                    </div>
+                </div>
+
+                <div class="theme-select-card" data-value="astral">
+                    <div class="card-icon">🌧️</div>
+                    <div class="card-info">
+                        <h4>Astral Rain</h4>
+                        <p>Soft falling droplets with active ground splash physics</p>
+                    </div>
+                </div>
+
+                <div class="theme-select-card" data-value="matrix">
+                    <div class="card-icon">📟</div>
+                    <div class="card-info">
+                        <h4>Matrix Rain</h4>
+                        <p>Retro matrix data stream over pure absolute pitch black</p>
+                    </div>
+                </div>
+
+                <div class="theme-select-card" data-value="light">
+                    <div class="card-icon">❄️</div>
+                    <div class="card-info">
+                        <h4>Light Rain</h4>
+                        <p>A minimalist pure white canvas styled with falling glowing yellow snowflakes</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="control-btn btn-secondary close-modal-action-btn" id="closeSettingsBtn">Apply Configurations</button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
