@@ -453,7 +453,7 @@ body[data-theme="light"] .theme-select-card.active {
   left: 0;
   top: 0;
   width: 100%;
-  height: 110%; 
+  height: 100vh; 
   z-index: 2;
   opacity: 0;
   transition: opacity 0.8s ease;
@@ -535,30 +535,41 @@ body[data-theme="light"] .splat { display: none !important; }
    6. PHYSICAL MOTION TIMINGS KEYFRAMES
    ========================================================================== */
 /* Ambient Rain Keyframes */
+/* Controls the downward motion of the drop container shell */
 @keyframes dropAmbient {
   0% { transform: translateY(0vh); }
-  75%, 100% { transform: translateY(90vh); }
+  /* Changed from 90vh to 85vh to stop perfectly at 85% screen height */
+  85%, 100% { transform: translateY(100vh); }
 }
+
+/* Controls when the vertical rain strand fades out out of sight */
 @keyframes stemAmbient {
   0%, 65% { opacity: 1; }
+  /* Sells the impact by zeroing opacity exactly as it hits the 85vh mark */
   75%, 100% { opacity: 0; }
 }
+
+/* Controls the expanding dot ripple ring hitting the pavement floor */
 @keyframes splatAmbient {
-  0%, 80% { transform: scale(0); opacity: 1; }
-  90% { transform: scale(1); opacity: 0.5; }
+  /* Keeps the splash scale at zero until the drop hits the floor at 75% */
+  0%, 75% { transform: scale(0); opacity: 1; }
+  /* Triggers the burst immediately right after impact */
+  85% { transform: scale(1); opacity: 0.5; }
   100% { transform: scale(1.5); opacity: 0; }
 }
 
-/* Astral Rain Keyframes */
+/* Astral Rain Motion Keyframes (Aligned to fall behind your workspace deck) */
 @keyframes dropAstral {
   0% { transform: translateY(0vh); }
-  100% { transform: translateY(105vh); } 
+  /* Set to 105vh to push the elongated strand completely past your screen limits */
+  100% { transform: translateY(120vh); } 
 }
 @keyframes splatAstral {
   0%, 80% { transform: scale(0); opacity: 1; }
   90% { transform: scale(1); opacity: 0.6; }
   100% { transform: scale(1.6); opacity: 0; }
 }
+
 
 /* Light Snow Dynamic Drift Keyframes (Simplified) */
 @keyframes dropLightSnow {
