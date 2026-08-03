@@ -139,6 +139,7 @@ const generateRainFx = function() {
     backRow.innerHTML = '';
     const activeTheme = document.body.getAttribute('data-theme');
     
+    // Updated condition path to support your new unified astral string name
     if (activeTheme !== 'astral' && activeTheme !== 'ambient' && activeTheme !== 'light') return;
 
     let increment = 0;
@@ -148,7 +149,6 @@ const generateRainFx = function() {
     while (increment < 100) {
         let randoHundo = (Math.floor(Math.random() * (98 - 1 + 1) + 1));
         
-        // Scarce Snow Logic: Keeps the snowflake count minimal and clean
         let randoFiver = (Math.floor(Math.random() * (14 - 8 + 1) + 8));
         increment += randoFiver;
         
@@ -163,16 +163,14 @@ const generateRainFx = function() {
             backDrops += '<div class="drop" style="right: ' + increment + '%; bottom: ' + (randoFiver + randoFiver - 1 + 100) + '%; animation-delay: 0.' + randoHundo + 's; animation-duration: ' + primaryPrefix + randoHundo + 's;"><div class="stem" style="animation-delay: 0.' + randoHundo + 's; animation-duration: ' + subPrefix + randoHundo + 's;"></div><div class="splat" style="animation-delay: 0.' + randoHundo + 's; animation-duration: ' + subPrefix + randoHundo + 's;"></div></div>';
         
         } else if (activeTheme === 'light') {
-            // Anti-Wave Solution: Unique speed formula per snowflake
             let randoSpeed = (Math.random() * (6.5 - 3.0) + 3.0).toFixed(2);
-            // Positive Staggered Delay: Forces particles to wait and spawn strictly at the screen boundaries
             let randoDelay = (Math.random() * 4).toFixed(2);
             
             drops += '<div class="drop" style="left: ' + increment + '%; bottom: ' + (randoFiver + randoFiver - 1 + 100) + '%; animation-delay: ' + randoDelay + 's; animation-duration: ' + randoSpeed + 's;"><div class="stem"></div><div class="splat"></div></div>';
             backDrops += '<div class="drop" style="right: ' + increment + '%; bottom: ' + (randoFiver + randoFiver - 1 + 100) + '%; animation-delay: ' + randoDelay + 's; animation-duration: ' + randoSpeed + 's;"><div class="stem"></div><div class="splat"></div></div>';
         
-        } else {
-            // Default Astral theme setting configurations
+        } else if (activeTheme === 'astral') {
+            // Target fix: Re-mapped the string loop directly to your custom soft falling droplets layout
             drops += '<div class="drop" style="left: ' + increment + '%; bottom: ' + (randoFiver + randoFiver - 1 + 100) + '%; animation-delay: 0.' + randoHundo + 's; animation-duration: ' + primaryPrefix + randoHundo + 's;"><div class="stem" style="animation-delay: 0.' + randoHundo + 's; animation-duration: ' + subPrefix + randoHundo + 's;"></div><div class="splat" style="animation-delay: 0.' + randoHundo + 's; animation-duration: ' + subPrefix + randoHundo + 's;"></div></div>';
             backDrops += '<div class="drop" style="right: ' + increment + '%; bottom: ' + (randoFiver + randoFiver - 1 + 100) + '%; animation-delay: 0.' + randoHundo + 's; animation-duration: ' + primaryPrefix + randoHundo + 's;"><div class="stem" style="animation-delay: 0.' + randoHundo + 's; animation-duration: ' + subPrefix + randoHundo + 's;"></div><div class="splat" style="animation-delay: 0.' + randoHundo + 's; animation-duration: ' + subPrefix + randoHundo + 's;"></div></div>';
         }
