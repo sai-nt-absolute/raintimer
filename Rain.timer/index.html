@@ -3,81 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Office Focus Dashboard</title>
-    <!-- Link to your external stylesheet here or wait for Part 2 -->
+    <title>Rain.Timer</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<!-- The rain engine targets classes directly on the body -->
-<body class="back-row-toggle splat-toggle">
+<body class="splat-toggle back-row-toggle" data-theme="ambient">
 
-    <!-- Your Custom CSS Rain Containers -->
+    <!-- Environmental Theme Canvas Infrastructure -->
+    <canvas id="canv"></canvas>
     <div class="rain front-row"></div>
     <div class="rain back-row"></div>
 
-    <!-- Live System Clock Overlays -->
-    <div class="top-bar">
-        <div class="live-clock glass">Time Now: <span id="currentClock">00:00:00 AM</span></div>
-        <div class="leave-clock glass">Freedom Target: <span id="leaveClock">--:--:--</span></div>
-    </div>
-
-    <!-- Main Workspace Frame -->
-    <div class="workspace">
+    <div class="app-viewport">
         
-        <!-- Timeline Shift Event History Logs -->
-        <div class="sidebar glass">
-            <h2>Shift Timeline</h2>
-            <ul class="log-list" id="logList">
-                <li class="log-item">System ready. Hit Start to clock in.</li>
-            </ul>
-        </div>
+        <!-- 1. Top Centered Console Display -->
+        <header class="top-console authentic-glass">
+            <div class="console-item">Time: <span id="currentClock">00:00:00</span></div>
+            <div class="console-divider"></div>
+            <div class="console-item">Shift End: <span id="leaveClock">--:--:--</span></div>
+        </header>
 
-        <!-- Perfectly Centered Timer Cluster Core -->
-        <div class="main-cluster">
-            <div class="timer-card glass">
-                <div class="metrics-grid">
-                    <div class="metric-box">
-                        <div class="metric-label">Time Done</div>
-                        <div class="metric-value" id="timeDoneDisplay">00:00:00</div>
-                    </div>
-                    <div class="metric-box">
-                        <div class="metric-label">Time Left</div>
-                        <div class="metric-value" id="timeLeftDisplay">08:00:00</div>
-                    </div>
+        <div class="rain-viewing-gap"></div>
+
+        <!-- Centralized Bottom Workspace Cluster Deck -->
+        <footer class="bottom-workspace-deck">
+            
+            <!-- 2. Main Inline Ribbon Controller Bar (With Pop-up Glass Styling Overlay) -->
+            <div class="ribbon-panel authentic-glass popup-glass">
+                <div class="target-input-cluster">
+                    <input type="number" id="hrInput" value="8" min="0" max="24" placeholder="HH">
+                    <span class="lbl-tag">hr</span>
+                    <input type="number" id="minInput" value="0" min="0" max="59" placeholder="MM">
+                    <span class="lbl-tag">min</span>
+                    <button class="control-btn btn-secondary" id="setTargetBtn">Set</button>
+                </div>
+
+                <div class="ribbon-divider"></div>
+
+                <div class="metric-readout">
+                    <div class="metric-label">Elapsed</div>
+                    <div class="metric-value value-work" id="timeDoneDisplay">00:00:00</div>
+                </div>
+
+                <div class="metric-readout">
+                    <div class="metric-label">Remaining</div>
+                    <div class="metric-value value-success" id="timeLeftDisplay">08:00:00</div>
+                </div>
+
+                <div class="ribbon-divider"></div>
+
+                <div class="execution-actions">
+                    <button class="control-btn btn-primary" id="mainBtn">Start Shift</button>
+                    <button class="control-btn btn-neutral" id="resetBtn">Reset</button>
+                </div>
+
+                <button class="gear-trigger-btn" id="gearBtn" title="Engine Settings">⚙️</button>
+            </div>
+
+            <!-- 3. Combined Analytics Ledger Panel -->
+            <div class="ledger-panel authentic-glass">
+                <div class="ledger-header-row">
+                    <h2>Break History Log</h2>
+                    <div class="ledger-header-divider"></div>
+                    <div class="ledger-running-total">Total Break Time: <span id="totalBreakDisplay">00:00:00</span></div>
                 </div>
                 
-                <div class="controls">
-                    <button class="btn btn-main" id="mainBtn">Start Work</button>
-                    <button class="btn btn-reset" id="resetBtn">Reset</button>
+                <div class="ledger-scroll-viewport">
+                    <table class="ledger-data-table">
+                        <thead>
+                            <tr>
+                                <th style="width: 70px; text-align: center;">Sl. No</th>
+                                <th>Break Start</th>
+                                <th>Break End</th>
+                                <th>Duration</th>
+                            </tr>
+                        </thead>
+                        <tbody id="breakLogBody">
+                            <tr id="emptyPlaceholder">
+                                <td colspan="4" class="empty-placeholder-text">No workplace break events logged for this focus session.</td>
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
             </div>
+
+        </footer>
+    </div>
+
+    <!-- Redesigned Wide Modern Themes Settings Popup Overlay Modal Box -->
+    <div class="settings-modal-backdrop" id="settingsModal">
+        <div class="modal-box authentic-glass wide-modal">
+            <h3>Theme Selector</h3>
+            
+            <!-- Modern Dynamic Visual Selector Cards Deck Layout -->
+            <div class="theme-cards-deck">
+                <div class="theme-select-card" data-value="ambient">
+                    <div class="card-icon">☔</div>
+                    <div class="card-info">
+                        <h4>Ambient Rain</h4>
+                        <p>Classic fast organic falling drops with rapid particle splats</p>
+                    </div>
+                </div>
+
+                <div class="theme-select-card" data-value="astral">
+                    <div class="card-icon">🌧️</div>
+                    <div class="card-info">
+                        <h4>Astral Rain</h4>
+                        <p>Soft falling droplets with active ground splash physics</p>
+                    </div>
+                </div>
+
+                <div class="theme-select-card" data-value="matrix">
+                    <div class="card-icon">📟</div>
+                    <div class="card-info">
+                        <h4>Matrix Rain</h4>
+                        <p>Retro matrix data stream over pure absolute pitch black</p>
+                    </div>
+                </div>
+
+                <div class="theme-select-card" data-value="light">
+                    <div class="card-icon">❄️</div>
+                    <div class="card-info">
+                        <h4>Light Rain</h4>
+                        <p>A minimalist pure white canvas styled with falling glowing yellow snowflakes</p>
+                    </div>
+                </div>
+            </div>
+
+            <button class="control-btn btn-secondary close-modal-action-btn" id="closeSettingsBtn">Apply Configurations</button>
         </div>
     </div>
 
-    <!-- Integrated Hidden Configurations Settings Tray -->
-    <button class="settings-toggle" id="gearBtn">⚙️</button>
-    <div class="settings-panel glass" id="settingsPanel">
-        <h3>Dashboard Configs</h3>
-        <div class="setting-row">
-            <label>Shift Target (Hours)</label>
-            <input type="number" id="shiftInput" value="8" min="1" max="24">
-        </div>
-        <div class="setting-row">
-            <label>Enable Rain</label>
-            <input type="checkbox" id="rainToggle" checked>
-        </div>
-        <div class="setting-row">
-            <label>Enable Splat Drops</label>
-            <input type="checkbox" id="splatToggleInput" checked>
-        </div>
-        <div class="setting-row">
-            <label>Enable Deep Back Row</label>
-            <input type="checkbox" id="backRowToggleInput" checked>
-        </div>
-    </div>
-
-    <!-- Standard Library Dependency for your Rain Code Generator Engine -->
-    <script src="https://jquery.com"></script>
-    <!-- Link to your external JS logic file here or wait for Part 3 -->
     <script src="script.js"></script>
 </body>
 </html>
