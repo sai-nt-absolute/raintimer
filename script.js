@@ -317,6 +317,24 @@ function applyThemeProfile(themeValue) {
     renderDisplays();
 }
 
+const ledgerPanel = document.getElementById('ledgerPanel');
+const tableToggleBtn = document.getElementById('tableToggleBtn');
+
+/* ==========================================================================
+   LEDGER RESPONSIVE HEIGHT DYNAMIC EXPANSION HANDLER
+   ========================================================================== */
+tableToggleBtn.addEventListener('click', () => {
+    // Toggles the expansion class modifier rule
+    ledgerPanel.classList.toggle('expanded');
+    
+    // Updates accessibility tooltip helpers based on panel positions
+    if (ledgerPanel.classList.contains('expanded')) {
+        tableToggleBtn.title = "Collapse View";
+    } else {
+        tableToggleBtn.title = "Expand View";
+    }
+});
+
 /* ==========================================================================
    INITIALIZATION BOOTSTRAP
    ========================================================================== */
