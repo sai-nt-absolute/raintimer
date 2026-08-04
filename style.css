@@ -616,3 +616,98 @@ body.rain-reverse .splat { display: none !important; }
   .bottom-workspace-deck { width: 100%; }
   .modal-box.wide-modal { width: 90%; }
 }
+
+/* ==========================================================================
+   MOBILE INTERACTION PATCHES & STRUCTURAL EXPANSIONS
+   ========================================================================== */
+/* Fix: Explicitly force interactive decks to catch clicks over the weather overlay animations */
+.top-console,
+.ribbon-panel,
+.ledger-panel,
+.settings-modal-backdrop {
+  pointer-events: auto !important;
+}
+
+/* Expansion Arrow Layout Setup */
+.ledger-expand-btn {
+  background: none;
+  border: none;
+  color: var(--text-slate);
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 4px 8px;
+  margin-right: 8px;
+  border-radius: 4px;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+.ledger-expand-btn:hover {
+  color: var(--text-white);
+  background: rgba(255, 255, 255, 0.05);
+}
+body[data-theme="light"] .ledger-expand-btn:hover {
+  background: rgba(0, 0, 0, 0.05);
+}
+
+/* Dynamic State Modifier Class Rules called by JS */
+.ledger-panel.expanded {
+  height: 380px !important; /* Doubles view height structural layout space */
+}
+.ledger-panel.expanded .ledger-expand-btn {
+  transform: rotate(180deg); /* Flips the arrow downward when open */
+  color: var(--ui-work);
+}
+
+/* High-Utility Responsive Media Query Breakpoints */
+@media (max-width: 880px) {
+  .app-viewport {
+    padding: 16px; /* Shrinks grid headroom breathing padding on small screens */
+  }
+
+  .bottom-workspace-deck {
+    width: 100%;
+    gap: 12px;
+  }
+
+  /* Fix: Rewrites ribbon bar configuration to wrap gracefully into grid structures on mobile phones */
+  .ribbon-panel {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+    padding: 20px;
+    height: auto !important;
+  }
+
+  .ribbon-divider {
+    display: none; /* Eliminates vertical design lines on stacked horizontal structures */
+  }
+
+  .target-input-cluster {
+    justify-content: center;
+    width: 100%;
+  }
+  .target-input-cluster input[type="number"] {
+    flex-grow: 1; /* Lets numeric entry boxes fill line lengths neatly */
+  }
+
+  .metric-readout {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 0;
+    border-bottom: 1px solid var(--glass-edge);
+    padding-bottom: 8px;
+  }
+  .metric-label { margin-bottom: 0; }
+
+  .execution-actions {
+    width: 100%;
+  }
+  .execution-actions .control-btn {
+    flex-grow: 1; /* Spreads out primary tracking buttons to span screen widths evenly */
+  }
+
+  .gear-trigger-btn {
+    align-self: center;
+    padding: 8px;
+  }
+}
